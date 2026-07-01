@@ -263,6 +263,8 @@ Field type is always `"string"` for the confirmed fields above.
 ### Alert Record Deduplication
 Edwin may return multiple alert records for the same source ID (e.g. recurring alerts on the same DS/ES number at different times), sometimes linked to different incidents. When grouping by source ID, join all distinct non-empty values with ` | ` — multiple incident numbers joined together indicates the same source ID had different incident outcomes across occurrences and warrants manual review.
 
+### Incident Reopening
+Edwin reopens existing ServiceNow incidents rather than creating duplicates when a new alert fires for a previously resolved condition. This is intentional deduplication behaviour, not a bug.
 
 ### Source ID Instability
 `cf.eventSourceId` is overwritten each time the same alert condition re-fires with a new DS/ES number. For long-lived recurring alerts, the ID visible in a current LM export may not match any Edwin alert record (it's already been superseded). Use the CI+Object fallback query (1b) in these cases.
